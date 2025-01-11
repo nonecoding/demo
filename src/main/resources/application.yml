@@ -1,0 +1,38 @@
+# Server configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# Spring configuration
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+# Knife4j configuration
+knife4j:
+  enable: true
+  setting:
+    language: en-US
+    enable-swagger-models: true
+    enable-document-manage: true
+    swagger-model-name: Models
+    enable-version: false
+    enable-reload-cache-parameter: false
+    enable-after-script: true
+    enable-filter-multipart-api-method-type: POST
+    enable-filter-multipart-apis: false
+    enable-request-cache: true
+    enable-search: true
+    enable-debug: true
+    enable-open-api: false
+    enable-group: true
+  basic:
+    enable: false
+    username: admin
+    password: 123456
+  production: false
