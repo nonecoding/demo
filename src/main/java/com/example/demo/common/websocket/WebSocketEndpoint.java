@@ -1,7 +1,7 @@
-package com.example.demo.websocket;
+package com.example.demo.common.websocket;
 
 //import com.example.demo.service.JobService;
-import com.example.demo.utils.JsonUtil;
+import com.example.demo.common.utils.JsonUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

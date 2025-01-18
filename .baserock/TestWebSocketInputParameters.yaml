@@ -1,0 +1,76 @@
+---
+targetClass:
+  fullClassName: "com.example.demo.demo1.service.TestWebSocket"
+methods:
+- method:
+    name: "send"
+    sourceCodeSignature: "void send(SocketReq req)"
+    returnType: "void"
+    parameters:
+    - name: "req"
+      type: "com.example.demo.demo1.vo.SocketReq"
+    instructionFingerprint: "B3D717FE8E4BA0DED1094E7865AF362F"
+  paths:
+  - testPathName: "sendTest"
+    constructorSignature: "<init>() : void"
+    problemWasSolvedByProver: true
+    inputParameters:
+    - type: "CONSTRUCTOR"
+      name: "constructor"
+      valueUuid: "target"
+    - type: "INPUT"
+      name: "req"
+      valueUuid: "req"
+    - type: "FIELD"
+      name: "webSocketEndpoint"
+      valueUuid: "fieldWebSocketEndpoint"
+      methodExercised:
+        expression: "sendMessageToUser(userId,message):void"
+    - type: "LOCAL_VARIABLE"
+      name: "req"
+      valueUuid: "req"
+      methodExercised:
+        expression: "getUserId():userId"
+    - type: "LOCAL_VARIABLE"
+      name: "req"
+      valueUuid: "req"
+      methodExercised:
+        expression: "getMessage():message"
+    - type: "RESULT"
+      name: "result"
+      valueUuid: "void2"
+    disabled: false
+    allValues:
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.service.TestWebSocket"
+        parameters: []
+        propertiesMap:
+          webSocketEndpoint:
+            modelValueType: "MOCK"
+            valueType: "com.example.demo.common.websocket.WebSocketEndpoint"
+            uuid: "fieldWebSocketEndpoint"
+      valueType: "com.example.demo.demo1.service.TestWebSocket"
+      uuid: "target"
+    - modelValueType: "MOCK"
+      valueType: "com.example.demo.demo1.vo.SocketReq"
+      uuid: "req"
+    - modelValueType: "MOCK"
+      valueType: "com.example.demo.common.websocket.WebSocketEndpoint"
+      uuid: "fieldWebSocketEndpoint"
+      nameForMock: "webSocketEndpoint"
+    - modelValueType: "VOID"
+      valueType: "void"
+      uuid: "void"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "return_of_getUserId1"
+      valueType: "java.lang.String"
+      uuid: "userId"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "return_of_getMessage1"
+      valueType: "java.lang.String"
+      uuid: "message"
+    - modelValueType: "VOID"
+      uuid: "void2"

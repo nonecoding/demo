@@ -1,6 +1,6 @@
 # Server configuration
 server:
-  port: 8080
+  port: 8089
   servlet:
     context-path: /
 
@@ -12,6 +12,16 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: my-consumer-group
+      topic: my-topic
+      auto-offset-reset: earliest
+      max-poll-records: 100
+      max-poll-interval-ms: 300000
+      session-timeout-ms: 10000
+      heartbeat-interval-ms: 3000
 
 # Knife4j configuration
 knife4j:
@@ -36,3 +46,5 @@ knife4j:
     username: admin
     password: 123456
   production: false
+
+

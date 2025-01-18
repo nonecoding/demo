@@ -1,0 +1,59 @@
+---
+targetClass:
+  fullClassName: "com.example.demo.demo1.controller.TestWebSocketController"
+methods:
+- method:
+    name: "send"
+    sourceCodeSignature: "void send(@RequestBody SocketReq req)"
+    returnType: "void"
+    parameters:
+    - name: "req"
+      type: "com.example.demo.demo1.vo.SocketReq"
+    instructionFingerprint: "821B63C4B942248AE15F3EAAD0C50384"
+  paths:
+  - testPathName: "sendTest"
+    constructorSignature: "<init>() : void"
+    problemWasSolvedByProver: true
+    inputParameters:
+    - type: "CONSTRUCTOR"
+      name: "constructor"
+      valueUuid: "target"
+    - type: "INPUT"
+      name: "req"
+      valueUuid: "req"
+    - type: "FIELD"
+      name: "testWebSocket"
+      valueUuid: "fieldTestWebSocket"
+      methodExercised:
+        expression: "send(req):void"
+    - type: "RESULT"
+      name: "result"
+      valueUuid: "void2"
+    disabled: false
+    allValues:
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.controller.TestWebSocketController"
+        parameters: []
+        propertiesMap:
+          testWebSocket:
+            modelValueType: "MOCK"
+            valueType: "com.example.demo.demo1.service.TestWebSocket"
+            uuid: "fieldTestWebSocket"
+      valueType: "com.example.demo.demo1.controller.TestWebSocketController"
+      uuid: "target"
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.vo.SocketReq"
+        parameters: []
+      valueType: "com.example.demo.demo1.vo.SocketReq"
+      uuid: "req"
+    - modelValueType: "MOCK"
+      valueType: "com.example.demo.demo1.service.TestWebSocket"
+      uuid: "fieldTestWebSocket"
+      nameForMock: "testWebSocket"
+    - modelValueType: "VOID"
+      valueType: "void"
+      uuid: "void"
+    - modelValueType: "VOID"
+      uuid: "void2"

@@ -1,0 +1,169 @@
+---
+targetClass:
+  fullClassName: "com.example.demo.demo1.controller.Test"
+methods:
+- method:
+    name: "downloadFile"
+    sourceCodeSignature: "void downloadFile(@RequestBody FilePath file, HttpServletResponse\
+      \ response)"
+    returnType: "void"
+    parameters:
+    - name: "file"
+      type: "com.example.demo.demo1.vo.FilePath"
+    - name: "response"
+      type: "javax.servlet.http.HttpServletResponse"
+    instructionFingerprint: "A8DD7A128070865104E5CBA090333EC6"
+  paths:
+  - testPathName: "downloadFileTest"
+    constructorSignature: "<init>() : void"
+    problemWasSolvedByProver: true
+    inputParameters:
+    - type: "CONSTRUCTOR"
+      name: "constructor"
+      valueUuid: "target"
+    - type: "INPUT"
+      name: "file"
+      valueUuid: "file"
+    - type: "INPUT"
+      name: "response"
+      valueUuid: "response"
+    - type: "STATIC"
+      name: "FileDownloadUtil.class"
+      valueUuid: "FileDownloadUtil.class"
+      methodExercised:
+        expression: "downloadFile(response,file2-any,fileName):void"
+        throwsExceptions:
+        - "java.io.IOException"
+    - type: "RESULT"
+      name: "result"
+      valueUuid: "void2"
+    disabled: false
+    allValues:
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.controller.Test"
+        parameters: []
+      valueType: "com.example.demo.demo1.controller.Test"
+      uuid: "target"
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.vo.FilePath"
+        parameters: []
+      valueType: "com.example.demo.demo1.vo.FilePath"
+      uuid: "file"
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "javax.servlet.http.HttpServletResponseWrapper"
+        parameters:
+        - name: "response"
+          value:
+            modelValueType: "OBJECT"
+            content: !<new>
+              target: "javax.servlet.http.HttpServletResponseWrapper"
+              parameters:
+              - name: "response"
+                value:
+                  modelValueType: "MOCK"
+                  valueType: "javax.servlet.http.HttpServletResponse"
+                  uuid: "response-response-response"
+            valueType: "javax.servlet.http.HttpServletResponseWrapper"
+            uuid: "response-response"
+      valueType: "javax.servlet.http.HttpServletResponseWrapper"
+      uuid: "response"
+    - modelValueType: "MOCK"
+      valueType: "com.example.demo.common.utils.FileDownloadUtil"
+      uuid: "FileDownloadUtil.class"
+    - modelValueType: "VOID"
+      valueType: "void"
+      uuid: "void"
+    - modelValueType: "ANY"
+      valueType: "java.io.File"
+      uuid: "file2-any"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "\\u767D\\u5934\\u9E70.jpg"
+      valueType: "java.lang.String"
+      uuid: "fileName"
+    - modelValueType: "VOID"
+      uuid: "void2"
+  - testPathName: "downloadFileWhenCaughtIOException"
+    constructorSignature: "<init>() : void"
+    problemWasSolvedByProver: false
+    inputParameters:
+    - type: "CONSTRUCTOR"
+      name: "constructor"
+      valueUuid: "target"
+    - type: "INPUT"
+      name: "file"
+      valueUuid: "file"
+    - type: "INPUT"
+      name: "response"
+      valueUuid: "response"
+    - type: "STATIC"
+      name: "FileDownloadUtil.class"
+      valueUuid: "FileDownloadUtil.class"
+      methodExercised:
+        expression: "downloadFile(response,file2-any,fileName):void"
+        throwsExceptions:
+        - "java.io.IOException"
+    - type: "RESULT"
+      name: "result"
+      valueUuid: "void3"
+    disabled: false
+    failureReason:
+      reason: "METHOD_WITHOUT_EXPRESSION_SUPPORT"
+      details: "Expression missing: javax.servlet.http.HttpServletResponse.setStatus(int)\
+        \ : void"
+    allValues:
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.controller.Test"
+        parameters: []
+      valueType: "com.example.demo.demo1.controller.Test"
+      uuid: "target"
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.vo.FilePath"
+        parameters: []
+      valueType: "com.example.demo.demo1.vo.FilePath"
+      uuid: "file"
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "javax.servlet.http.HttpServletResponseWrapper"
+        parameters:
+        - name: "response"
+          value:
+            modelValueType: "OBJECT"
+            content: !<new>
+              target: "javax.servlet.http.HttpServletResponseWrapper"
+              parameters:
+              - name: "response"
+                value:
+                  modelValueType: "MOCK"
+                  valueType: "javax.servlet.http.HttpServletResponse"
+                  uuid: "response-response-response"
+            valueType: "javax.servlet.http.HttpServletResponseWrapper"
+            uuid: "response-response"
+      valueType: "javax.servlet.http.HttpServletResponseWrapper"
+      uuid: "response"
+    - modelValueType: "MOCK"
+      valueType: "com.example.demo.common.utils.FileDownloadUtil"
+      uuid: "FileDownloadUtil.class"
+    - modelValueType: "VOID"
+      valueType: "void"
+      uuid: "void"
+    - modelValueType: "ANY"
+      valueType: "java.io.File"
+      uuid: "file2-any"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "\\u767D\\u5934\\u9E70.jpg"
+      valueType: "java.lang.String"
+      uuid: "fileName"
+    - modelValueType: "VOID"
+      uuid: "void3"
+    branches:
+    - lineNumber: 21
+      expression: "catch-exception (IOException)"
+      range: "(21,11)-(21,30)"
+      evaluatedAs: true

@@ -1,18 +1,18 @@
-package com.example.demo.controller;
+package com.example.demo.demo1.controller;
 
-import com.example.demo.service.TestWebSocket;
-import com.example.demo.vo.SocketReq;
+import com.example.demo.demo1.service.TestWebSocket;
+import com.example.demo.demo1.vo.SocketReq;
+import io.swagger.annotations.ApiModel;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/testSocket")
+@ApiModel(description = "测试websocket")
 public class TestWebSocketController {
     @Resource
     private TestWebSocket testWebSocket;

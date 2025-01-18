@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.common.utils;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,7 +15,8 @@ public class FileDownloadUtil {
         }
 
         // Set correct content type
-        String contentType = determineContentType(fileName);
+//        String contentType = determineContentType(fileName);
+        String contentType = "x/download";
         response.setContentType(contentType);
         
         // Set headers
@@ -39,28 +40,28 @@ public class FileDownloadUtil {
         }
     }
 
-    private static String determineContentType(String fileName) {
-        String extension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-        switch (extension) {
-            case "pdf":
-                return MediaType.APPLICATION_PDF_VALUE;
-            case "txt":
-                return MediaType.TEXT_PLAIN_VALUE;
-            case "doc":
-            case "docx":
-                return "application/msword";
-            case "xls":
-            case "xlsx":
-                return "application/vnd.ms-excel";
-            case "zip":
-                return "application/zip";
-            case "jpg":
-            case "jpeg":
-                return MediaType.IMAGE_JPEG_VALUE;
-            case "png":
-                return MediaType.IMAGE_PNG_VALUE;
-            default:
-                return MediaType.APPLICATION_OCTET_STREAM_VALUE;
-        }
-    }
+//    private static String determineContentType(String fileName) {
+//        String extension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+//        switch (extension) {
+//            case "pdf":
+//                return MediaType.APPLICATION_PDF_VALUE;
+//            case "txt":
+//                return MediaType.TEXT_PLAIN_VALUE;
+//            case "doc":
+//            case "docx":
+//                return "application/msword";
+//            case "xls":
+//            case "xlsx":
+//                return "application/vnd.ms-excel";
+//            case "zip":
+//                return "application/zip";
+//            case "jpg":
+//            case "jpeg":
+//                return MediaType.IMAGE_JPEG_VALUE;
+//            case "png":
+//                return MediaType.IMAGE_PNG_VALUE;
+//            default:
+//                return MediaType.APPLICATION_OCTET_STREAM_VALUE;
+//        }
+//    }
 }

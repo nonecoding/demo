@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.demo.demo1.service;
 
-import com.example.demo.vo.SocketReq;
-import com.example.demo.websocket.WebSocketEndpoint;
+import com.example.demo.demo1.vo.SocketReq;
+import com.example.demo.common.websocket.WebSocketEndpoint;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

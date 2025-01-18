@@ -1,0 +1,33 @@
+---
+targetClass:
+  fullClassName: "com.example.demo.demo1.controller.TestController"
+methods:
+- method:
+    name: "hello"
+    sourceCodeSignature: "String hello()"
+    returnType: "java.lang.String"
+    instructionFingerprint: "90291657968B57671941A0BE0314D85C"
+  paths:
+  - testPathName: "helloTest"
+    constructorSignature: "<init>() : void"
+    problemWasSolvedByProver: true
+    inputParameters:
+    - type: "CONSTRUCTOR"
+      name: "constructor"
+      valueUuid: "target"
+    - type: "RESULT"
+      name: "result"
+      valueUuid: "expectedResult"
+    disabled: false
+    allValues:
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.controller.TestController"
+        parameters: []
+      valueType: "com.example.demo.demo1.controller.TestController"
+      uuid: "target"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "Hello World"
+      valueType: "java.lang.String"
+      uuid: "expectedResult"
