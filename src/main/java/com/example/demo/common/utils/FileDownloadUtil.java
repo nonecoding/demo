@@ -2,13 +2,14 @@ package com.example.demo.common.utils;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class FileDownloadUtil {
-    
+
     public static void downloadFile(HttpServletResponse response, File file, String fileName) throws IOException {
         if (!file.exists()) {
             throw new FileNotFoundException("File not found: " + fileName);
@@ -18,10 +19,10 @@ public class FileDownloadUtil {
 //        String contentType = determineContentType(fileName);
         String contentType = "x/download";
         response.setContentType(contentType);
-        
+
         // Set headers
-        response.setHeader(HttpHeaders.CONTENT_DISPOSITION, 
-            "attachment; filename=\"" + URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString()) + "\"");
+        response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString()) + "\"");
         response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
         response.setHeader(HttpHeaders.PRAGMA, "no-cache");
         response.setHeader(HttpHeaders.EXPIRES, "0");
@@ -30,7 +31,7 @@ public class FileDownloadUtil {
         // Stream file content
         try (BufferedInputStream inStream = new BufferedInputStream(new FileInputStream(file));
              BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream())) {
-            
+
             byte[] buffer = new byte[8192];
             int bytesRead;
             while ((bytesRead = inStream.read(buffer)) != -1) {

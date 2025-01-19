@@ -22,6 +22,11 @@ spring:
       max-poll-interval-ms: 300000
       session-timeout-ms: 10000
       heartbeat-interval-ms: 3000
+  minio:
+    url: http://localhost:9000        # MinIO服务器地址
+    access-key: minioadmin            # 访问密钥
+    secret-key: minioadmin            # 秘密密钥
+    bucket: test                  # 默认桶名称
 
 # Knife4j configuration
 knife4j:

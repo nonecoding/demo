@@ -22,9 +22,9 @@ import java.util.Map;
 @Getter
 @Setter
 public class KafkaConfiguration {
-    
+
     private String bootstrapServers;
-    
+
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -52,7 +52,7 @@ public class KafkaConfiguration {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
-            new ConcurrentKafkaListenerContainerFactory<>();
+                new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }

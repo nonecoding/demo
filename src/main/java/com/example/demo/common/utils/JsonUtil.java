@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class JsonUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    
+
     public static String toJson(Object obj) {
         try {
             return objectMapper.writeValueAsString(obj);
@@ -17,7 +17,7 @@ public class JsonUtil {
             throw new RuntimeException("Failed to convert object to JSON", e);
         }
     }
-    
+
     public static JsonNode parse(String json) {
         try {
             return objectMapper.readTree(json);

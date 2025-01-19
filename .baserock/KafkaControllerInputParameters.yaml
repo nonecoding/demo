@@ -1,0 +1,171 @@
+---
+targetClass:
+  fullClassName: "com.example.demo.demo1.controller.KafkaController"
+methods:
+- method:
+    name: "sendMessage"
+    sourceCodeSignature: "ResponseEntity<String> sendMessage(@RequestBody String message)"
+    returnType: "org.springframework.http.ResponseEntity"
+    genericReturnType: "java.lang.String"
+    parameters:
+    - name: "message"
+      type: "java.lang.String"
+    instructionFingerprint: "FDE32F9C996B070136ABBD4A802CFAF1"
+  paths:
+  - testPathName: "sendMessageTest"
+    constructorSignature: "<init>(com.example.demo.demo1.service.KafkaProducerService)\
+      \ : void"
+    problemWasSolvedByProver: true
+    inputParameters:
+    - type: "CONSTRUCTOR"
+      name: "constructor"
+      valueUuid: "target"
+    - type: "INPUT"
+      name: "message"
+      valueUuid: "message"
+    - type: "FIELD"
+      name: "producerService"
+      valueUuid: "producerService"
+      methodExercised:
+        expression: "sendMessage(topic,message):void"
+    - type: "RESULT"
+      name: "result"
+      valueUuid: "responseEntity"
+    disabled: false
+    allValues:
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.controller.KafkaController"
+        parameters:
+        - name: "producerService"
+          value:
+            modelValueType: "MOCK"
+            valueType: "com.example.demo.demo1.service.KafkaProducerService"
+            uuid: "producerService"
+      valueType: "com.example.demo.demo1.controller.KafkaController"
+      uuid: "target"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "message1"
+      valueType: "java.lang.String"
+      uuid: "message"
+    - modelValueType: "MOCK"
+      valueType: "com.example.demo.demo1.service.KafkaProducerService"
+      uuid: "producerService"
+    - modelValueType: "VOID"
+      valueType: "void"
+      uuid: "void"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "my-topic"
+      valueType: "java.lang.String"
+      uuid: "topic"
+    - modelValueType: "OBJECT"
+      content: !<static_method_return>
+        target: "org.springframework.http.ResponseEntity"
+        method: "ok"
+        methodParameters:
+        - name: "body"
+          value:
+            modelValueType: "BASIC"
+            content: !<regular>
+              value: "Message sent successfully"
+            valueType: "java.lang.String"
+            uuid: "body"
+      valueType: "org.springframework.http.ResponseEntity"
+      genericValueType: "java.lang.String"
+      uuid: "responseEntity"
+  - testPathName: "sendMessageWhenCaughtException"
+    constructorSignature: "<init>(com.example.demo.demo1.service.KafkaProducerService)\
+      \ : void"
+    problemWasSolvedByProver: false
+    inputParameters:
+    - type: "CONSTRUCTOR"
+      name: "constructor"
+      valueUuid: "target"
+    - type: "INPUT"
+      name: "message"
+      valueUuid: "message"
+    - type: "FIELD"
+      name: "producerService"
+      valueUuid: "producerService"
+      methodExercised:
+        expression: "sendMessage(topic,message):void"
+    - type: "STATIC"
+      name: "ResponseEntity.class.real"
+      valueUuid: "ResponseEntity.class.real"
+      methodExercised:
+        expression: "internalServerError():responseEntityBodyBuilder"
+    - type: "RESULT"
+      name: "result"
+      valueUuid: "responseEntity2"
+    disabled: true
+    failureReason:
+      reason: "ERROR_RECALCULATING_SUGGESTED_VALUES"
+    disabledStatusUpdatedBy: "SYSTEM"
+    allValues:
+    - modelValueType: "OBJECT"
+      content: !<new>
+        target: "com.example.demo.demo1.controller.KafkaController"
+        parameters:
+        - name: "producerService"
+          value:
+            modelValueType: "MOCK"
+            valueType: "com.example.demo.demo1.service.KafkaProducerService"
+            uuid: "producerService"
+      valueType: "com.example.demo.demo1.controller.KafkaController"
+      uuid: "target"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "message1"
+      valueType: "java.lang.String"
+      uuid: "message"
+    - modelValueType: "MOCK"
+      valueType: "com.example.demo.demo1.service.KafkaProducerService"
+      uuid: "producerService"
+    - modelValueType: "EXCEPTION"
+      valueType: "java.lang.RuntimeException"
+      uuid: "void"
+    - modelValueType: "BASIC"
+      content: !<regular>
+        value: "my-topic"
+      valueType: "java.lang.String"
+      uuid: "topic"
+    - modelValueType: "REAL"
+      valueType: "org.springframework.http.ResponseEntity"
+      uuid: "ResponseEntity.class.real"
+    - modelValueType: "OBJECT"
+      content: !<static_method_return>
+        target: "org.springframework.http.ResponseEntity"
+        method: "internalServerError"
+        methodParameters: []
+      valueType: "org.springframework.http.ResponseEntity$BodyBuilder"
+      uuid: "responseEntityBodyBuilder"
+    - modelValueType: "OBJECT"
+      content: !<method_return_from_value>
+        target: "org.springframework.http.ResponseEntity"
+        localVariableValue:
+          modelValueType: "OBJECT"
+          content: !<static_method_return>
+            target: "org.springframework.http.ResponseEntity"
+            method: "internalServerError"
+            methodParameters: []
+          valueType: "org.springframework.http.ResponseEntity$BodyBuilder"
+          uuid: "responseEntityBodyBuilder"
+        methodParameters:
+        - name: "body"
+          value:
+            modelValueType: "BASIC"
+            content: !<regular>
+              value: "Error sending message: A"
+            valueType: "java.lang.String"
+            uuid: "string2"
+        methodName: "body"
+      valueType: "org.springframework.http.ResponseEntity"
+      genericValueType: "java.lang.String"
+      uuid: "responseEntity2"
+    branches:
+    - lineNumber: 27
+      expression: "catch-exception (Exception)"
+      range: "(27,11)-(27,28)"
+      evaluatedAs: true

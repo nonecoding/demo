@@ -17,7 +17,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class Knife4jConfig {
     @Value("${server.port}")
     private int port;
-    
+
     @Bean
     public Docket createRestApi() {
         // 输出 Swagger UI 地址
