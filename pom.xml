@@ -105,7 +105,19 @@
       <artifactId>kotlin-stdlib</artifactId>
       <version>1.6.10</version>
     </dependency>
+    <!-- MyBatis-Plus Starter -->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>3.4.3</version>
+    </dependency>
 
+    <!-- 达梦数据库JDBC驱动 -->
+    <dependency>
+      <groupId>dm.jdbc</groupId>
+      <artifactId>dm7jdbc</artifactId>
+      <version>8.0.0</version>
+    </dependency>
 
   </dependencies>
   <build>
@@ -137,5 +149,16 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
   </build>
 </project>

@@ -27,6 +27,14 @@ spring:
     access-key: minioadmin            # 访问密钥
     secret-key: minioadmin            # 秘密密钥
     bucket: test                  # 默认桶名称
+  datasource:
+    url: jdbc:dm://LOCALHOST:5236/TESTDB
+    username: SYSDBA
+    password: SYSDBA
+    driver-class-name: dm.jdbc.driver.DmDriver
+  mybatis-plus:
+    mapper-locations: classpath:com/example/demo/**/*.xml
+    type-aliases-package: com.example.demo.demo1.entities
 
 # Knife4j configuration
 knife4j:
