@@ -18,4 +18,6 @@ public interface UserMapper {
     // 定义插入方法
 //    @Insert("insert into USERS(NAME) values(#{user.name})")
     void insertUser(@Param("user") User user);
+
+    User findById(@Param("id") int id);
 }

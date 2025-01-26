@@ -6,6 +6,9 @@
     <select id="findAll" resultType="com.example.demo.demo1.entities.User">
         SELECT * FROM USERS
     </select>
+    <select id="findById" resultType="com.example.demo.demo1.entities.User">
+        SELECT * FROM USERS WHERE ID = #{id}
+    </select>
 
     <insert id="insertUser" parameterType="com.example.demo.demo1.entities.User">
         INSERT INTO USERS (NAME)

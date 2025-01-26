@@ -25,4 +25,8 @@ public class UserService{
     public void testPlus(User user) {
 
     }
+
+    public User getUser(int id) {
+        return userMapper.findById(id);
+    }
 }

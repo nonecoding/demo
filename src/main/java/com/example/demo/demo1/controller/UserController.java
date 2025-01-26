@@ -39,5 +39,9 @@ public class UserController {
         return "User added successfully";
     }
 
-
+    // 创建一个GET端点来获取数据
+    @GetMapping("/user/{id}")
+    public User getUser(@PathVariable int id) {
+        return userService.getUser(id);
+    }
 }
