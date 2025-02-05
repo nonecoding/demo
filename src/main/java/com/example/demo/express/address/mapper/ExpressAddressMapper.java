@@ -1,7 +1,6 @@
-package com.example.demo.express.mapper;
+package com.example.demo.express.address.mapper;
 
-import com.example.demo.express.entity.ExpressAddress;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.demo.express.address.entity.ExpressAddress;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,9 +1,8 @@
-package com.example.demo.express.service;
+package com.example.demo.express.address.service;
 
-import com.example.demo.express.entity.ExpressAddress;
-import com.example.demo.express.mapper.ExpressAddressMapper;
+import com.example.demo.express.address.entity.ExpressAddress;
+import com.example.demo.express.address.mapper.ExpressAddressMapper;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

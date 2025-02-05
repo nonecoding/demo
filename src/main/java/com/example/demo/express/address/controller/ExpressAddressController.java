@@ -1,8 +1,8 @@
-package com.example.demo.express.controller;
+package com.example.demo.express.address.controller;
 
 
-import com.example.demo.express.entity.ExpressAddress;
-import com.example.demo.express.service.ExpressAddressServiceImpl;
+import com.example.demo.express.address.entity.ExpressAddress;
+import com.example.demo.express.address.service.ExpressAddressServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

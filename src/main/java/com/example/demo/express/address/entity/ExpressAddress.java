@@ -1,4 +1,4 @@
-package com.example.demo.express.entity;
+package com.example.demo.express.address.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
