@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.express.mapper.ExpressAddressMapper">
+
+    <resultMap id="ExpressAddressMap" type="com.example.demo.express.entity.ExpressAddress">
+        <result property="id" column="id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="detailAddress" column="detail_address"/>
+        <result property="cityArea" column="city_area"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.demo.express.entity.ExpressAddress" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO express_address(create_time, update_time, is_default, detail_address, city_area, phone_number, name)
+        VALUES (#{address.createTime}, #{address.updateTime}, #{address.isDefault}, #{address.detailAddress}, #{address.cityArea}, #{address.phoneNumber}, #{address.name})
+    </insert>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM express_address WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.example.demo.express.entity.ExpressAddress">
+        UPDATE express_address
+            <set>
+                update_time = #{address.updateTime},
+                is_default = #{address.isDefault},
+                detail_address = #{address.detailAddress},
+                city_area = #{address.cityArea},
+                phone_number = #{address.phoneNumber},
+                name = #{address.name}
+            </set>
+        <where>
+            id = #{address.id}
+        </where>
+    </update>
+
+    <select id="selectById" parameterType="int" resultMap="ExpressAddressMap">
+        SELECT id, create_time, update_time, is_default, detail_address, city_area, phone_number, name
+        FROM express_address
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectPage" resultMap="ExpressAddressMap">
+        SELECT id, create_time, update_time, is_default, detail_address, city_area, phone_number, name
+        FROM express_address
+        ORDER BY id
+            LIMIT #{pageSize} offset #{offset}
+    </select>
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(*) FROM express_address
+    </select>
+
+</mapper>
