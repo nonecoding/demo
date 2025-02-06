@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.express.order.mapper.ExpressOrderMapper">
+
+    <!-- 定义结果映射，将数据表字段映射到实体类属性 -->
+    <resultMap id="ExpressOrderResultMap" type="com.example.demo.express.order.entity.ExpressOrder">
+        <id column="id" property="id" />
+        <result column="send_id" property="sendId" />
+        <result column="receive_id" property="receiveId" />
+        <result column="type" property="type" />
+        <result column="expect_time" property="expectTime" />
+        <result column="item_id" property="itemId" />
+        <result column="pay_method" property="payMethod" />
+        <result column="estimated_total_price" property="estimatedTotalPrice" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 插入数据，使用 useGeneratedKeys 获取自增主键 -->
+    <insert id="insert" parameterType="com.example.demo.express.order.entity.ExpressOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO express_order
+        (send_id, receive_id, type, expect_time, item_id, pay_method, estimated_total_price, create_time, update_time)
+        VALUES
+        (#{order.sendId}, #{order.receiveId}, #{order.type}, #{order.expectTime}, #{order.itemId}, #{order.payMethod}, #{order.estimatedTotalPrice}, #{order.createTime}, #{order.updateTime})
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="com.example.demo.express.order.entity.ExpressOrder">
+        UPDATE express_order
+            <set>
+                send_id = #{order.sendId},
+                receive_id = #{order.receiveId},
+                type = #{order.type},
+                expect_time = #{order.expectTime},
+                item_id = #{order.itemId},
+                pay_method = #{order.payMethod},
+                estimated_total_price = #{order.estimatedTotalPrice},
+                create_time = #{order.createTime},
+                update_time = #{order.updateTime}
+            </set>
+        <where>
+            id = #{order.id}
+        </where>
+    </update>
+
+    <!-- 根据 id 删除数据 -->
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM express_order WHERE id = #{id}
+    </delete>
+
+    <!-- 根据 id 查询单条记录 -->
+    <select id="selectById" parameterType="int" resultMap="ExpressOrderResultMap">
+        SELECT * FROM express_order WHERE id = #{id}
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="selectPage" resultMap="ExpressOrderResultMap">
+        SELECT * FROM express_order
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+</mapper>
