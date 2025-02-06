@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.express.region.mapper.ExpressRegionMapper">
+
+    <!-- 结果映射，将数据库字段映射到 ExpressRegion 实体属性 -->
+    <resultMap id="ExpressRegionResultMap" type="com.example.demo.express.region.entity.ExpressRegion">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="parentId" column="parent_id" />
+        <result property="level" column="level" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+    </resultMap>
+
+    <!-- 查询所有区域记录 -->
+    <select id="findAll" resultMap="ExpressRegionResultMap">
+        SELECT id, name, parent_id, level, create_time, update_time
+        FROM express_region
+    </select>
+
+</mapper>
