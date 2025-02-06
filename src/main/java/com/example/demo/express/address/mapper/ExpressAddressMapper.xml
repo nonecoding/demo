@@ -49,7 +49,7 @@
     <select id="selectPage" resultMap="ExpressAddressMap">
         SELECT id, create_time, update_time, is_default, detail_address, city_area, phone_number, name
         FROM express_address
-        ORDER BY id
+        ORDER BY create_time DESC 
             LIMIT #{pageSize} offset #{offset}
     </select>
 

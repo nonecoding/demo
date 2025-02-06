@@ -1,8 +1,11 @@
 package com.example.demo.express.address.service;
 
+import com.example.demo.common.exception.ValidationException;
 import com.example.demo.express.address.entity.ExpressAddress;
 import com.example.demo.express.address.mapper.ExpressAddressMapper;
 
+import com.example.demo.express.address.utils.PhoneNumberMasker;
+import com.example.demo.express.address.utils.PhoneNumberValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,11 @@ public class ExpressAddressServiceImpl{
     private ExpressAddressMapper expressAddressMapper;
 
     public int create(ExpressAddress expressAddress) {
+        //校验手机号吗
+        // Validate phone number
+        if (!PhoneNumberValidator.isValid(expressAddress.getPhoneNumber())) {
+            throw new ValidationException("Invalid phone number");
+        }
         expressAddress.setCreateTime(LocalDateTime.now());
         expressAddress.setUpdateTime(LocalDateTime.now());
         return expressAddressMapper.insert(expressAddress);
@@ -39,7 +47,14 @@ public class ExpressAddressServiceImpl{
     }
 
     public ExpressAddress getById(Integer id) {
-        return expressAddressMapper.selectById(id);
+        ExpressAddress expressAddress = expressAddressMapper.selectById(id);
+        // 查询时确保地址信息不超过40个字符
+        if (expressAddress.getDetailAddress() != null && expressAddress.getDetailAddress().length() > 40) {
+            expressAddress.setDetailAddress(expressAddress.getDetailAddress().substring(0, 40)+"...");
+        }
+        String maskedPhoneNumber = PhoneNumberMasker.mask(expressAddress.getPhoneNumber());
+        expressAddress.setPhoneNumber(maskedPhoneNumber);
+        return expressAddress;
     }
 
     public List<ExpressAddress> getPage(int pageNum, int pageSize) {

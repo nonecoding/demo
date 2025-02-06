@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.express.item.mapper.ExpressItemInfoMapper">
+
+    <!-- Insert-->
+    <insert id="insertExpressItemInfo" parameterType="com.example.demo.express.item.entity.ExpressItemInfo">
+        INSERT INTO express_item_info(name, estimated_weight, total_volume, type, create_time, update_time)
+        VALUES (#{item.name}, #{item.estimatedWeight}, #{item.totalVolume}, #{item.type}, #{item.createTime}, #{item.updateTime})
+    </insert>
+
+    <!-- Update-->
+    <update id="updateExpressItemInfo" parameterType="com.example.demo.express.item.entity.ExpressItemInfo">
+        UPDATE express_item_info
+            <set>
+                name = #{item.name},
+                estimated_weight = #{item.estimatedWeight},
+                total_volume = #{item.totalVolume},
+                type = #{item.type},
+                update_time = #{item.updateTime}
+            </set>
+        <where>
+            id = #{item.id}
+        </where>
+    </update>
+
+    <!-- Delete-->
+    <delete id="deleteExpressItemInfoById" parameterType="int">
+        DELETE FROM express_item_info WHERE id = #{id}
+    </delete>
+
+    <!-- Select By Id-->
+    <select id="selectExpressItemInfoById" parameterType="int" resultType="com.example.demo.express.item.entity.ExpressItemInfo">
+        SELECT id, name, estimated_weight AS estimatedWeight, total_volume AS totalVolume, type, create_time AS createTime, update_time AS updateTime
+        FROM express_item_info WHERE id = #{id}
+    </select>
+
+    <!-- Pagination Query-->
+    <select id="selectExpressItemInfoPage" resultType="com.example.demo.express.item.entity.ExpressItemInfo">
+        SELECT id, name, estimated_weight AS estimatedWeight, total_volume AS totalVolume, type, create_time AS createTime, update_time AS updateTime
+        FROM express_item_info
+        ORDER BY create_time DESC
+            LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+</mapper>
