@@ -1,21 +1,15 @@
 package com.example.demo.express.address.controller;
 
 
+import com.example.demo.common.utils.ResponseResult;
 import com.example.demo.express.address.entity.ExpressAddress;
 import com.example.demo.express.address.service.ExpressAddressServiceImpl;
+import com.example.demo.express.address.vo.AuthReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * <p>
- *  前端控制器
- * </p>
- *
- * @author xj
- * @since 2025-02-05
- */
 @RestController
 @RequestMapping("/express-address")
 public class ExpressAddressController {
@@ -24,32 +18,44 @@ public class ExpressAddressController {
     private ExpressAddressServiceImpl expressAddressService;
 
     @PostMapping("/create")
-    public String create(@RequestBody ExpressAddress expressAddress) {
+    public ResponseResult<String> create(@RequestBody ExpressAddress expressAddress) {
         expressAddressService.create(expressAddress);
-        return "Create success";
+        return ResponseResult.success("Create success");
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id) {
+    public ResponseResult<String> delete(@PathVariable Integer id) {
         expressAddressService.delete(id);
-        return "Delete success";
+        return ResponseResult.success("Delete success");
     }
 
     @PutMapping("/update")
-    public String update(@RequestBody ExpressAddress expressAddress) {
+    public ResponseResult<String> update(@RequestBody ExpressAddress expressAddress) {
         expressAddressService.update(expressAddress);
-        return "Update success";
+        return ResponseResult.success("Update success");
     }
 
     @GetMapping("/get/{id}")
-    public ExpressAddress get(@PathVariable Integer id) {
-        return expressAddressService.getById(id);
+    public ResponseResult<ExpressAddress> get(@PathVariable Integer id) {
+        ExpressAddress address = expressAddressService.getById(id);
+        return ResponseResult.success(address);
     }
 
     @GetMapping("/list")
-    public List<ExpressAddress> list(@RequestParam(defaultValue = "1") int pageNum,
-                                     @RequestParam(defaultValue = "10") int pageSize) {
-        return expressAddressService.getPage(pageNum, pageSize);
+    public ResponseResult<List<ExpressAddress>> list(@RequestParam(defaultValue = "1") int pageNum,
+                                                    @RequestParam(defaultValue = "10") int pageSize) {
+        List<ExpressAddress> addresses = expressAddressService.getPage(pageNum, pageSize);
+        return ResponseResult.success(addresses);
     }
 
+    /**
+     * 根据国家法律法规要求，寄件人姓名须与实名信息一致。您可以在下单前认证或现场出示证件
+     * @param authReq
+     * @return
+     */
+    @PostMapping("/auth")
+    public ResponseResult<Boolean> auth(@RequestBody AuthReq authReq) {
+        Boolean result = expressAddressService.auth(authReq);
+        return ResponseResult.success(result);
+    }
 }

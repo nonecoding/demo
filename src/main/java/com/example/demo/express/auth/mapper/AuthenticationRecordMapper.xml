@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.express.auth.mapper.AuthenticationRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.demo.express.auth.entity.AuthenticationRecord">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="id_card_number" property="idCardNumber"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="auth_time" property="authTime"/>
+        <result column="auth_status" property="authStatus"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, id_card_number, phone_number, auth_time, auth_status, remark, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.example.demo.express.auth.entity.AuthenticationRecord">
+        INSERT INTO express_auth (
+            name, id_card_number, phone_number, auth_time, auth_status, remark, create_time, update_time
+        ) VALUES (
+                     #{record.name}, #{record.idCardNumber}, #{record.phoneNumber}, #{record.authTime}, #{record.authStatus}, #{record.remark},
+                     #{record.createTime}, #{record.updateTime}
+                 )
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM authentication_record WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.example.demo.express.auth.entity.AuthenticationRecord">
+        UPDATE express_auth
+        <set>
+            <if test="name != null">name = #{record.name},</if>
+            <if test="idCardNumber != null">id_card_number = #{record.idCardNumber},</if>
+            <if test="phoneNumber != null">phone_number = #{record.phoneNumber},</if>
+            <if test="authTime != null">auth_time = #{record.authTime},</if>
+            <if test="authStatus != null">auth_status = #{record.authStatus},</if>
+            <if test="remark != null">remark = #{record.remark},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{record.id}
+    </update>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM express_auth
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectPage" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM express_auth
+        <where>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                AND phone_number LIKE CONCAT('%', #{phoneNumber}, '%')
+            </if>
+        </where>
+        ORDER BY auth_time DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+</mapper>
