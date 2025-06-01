@@ -1,19 +1,35 @@
 # Server configuration
 server:
-  port: 8089
+  port: ${SERVER_PORT:8089}
   servlet:
     context-path: /
+  # 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 # Spring configuration
 spring:
+  application:
+    name: demo-application
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+    default-property-inclusion: non_null
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      retries: 3
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
     consumer:
       group-id: my-consumer-group
       topic: my-topic
@@ -22,19 +38,40 @@ spring:
       max-poll-interval-ms: 300000
       session-timeout-ms: 10000
       heartbeat-interval-ms: 3000
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
   minio:
-    url: http://localhost:9000        # MinIO服务器地址
-    access-key: minioadmin            # 访问密钥
-    secret-key: minioadmin            # 秘密密钥
-    bucket: test                  # 默认桶名称
+    url: ${MINIO_URL:http://localhost:9000}
+    access-key: ${MINIO_ACCESS_KEY:minioadmin}
+    secret-key: ${MINIO_SECRET_KEY:minioadmin}
+    bucket: ${MINIO_BUCKET:demo-bucket}
   datasource:
-    url: jdbc:dm://LOCALHOST:5236/TESTDB
-    username: SYSDBA
-    password: SYSDBA
+    url: ${DB_URL:jdbc:dm://localhost:5236/TESTDB}
+    username: ${DB_USERNAME:SYSDBA}
+    password: ${DB_PASSWORD:SYSDBA}
     driver-class-name: dm.jdbc.driver.DmDriver
-  mybatis-plus:
-    mapper-locations: classpath:com/example/demo/**/*.xml
-    type-aliases-package: com.example.demo.demo1.entities
+    # 连接池配置
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
+
+# MyBatis Plus configuration
+mybatis-plus:
+  mapper-locations: classpath:com/example/demo/**/*.xml
+  type-aliases-package: com.example.demo.demo1.entities
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
 
 # Knife4j configuration
 knife4j:

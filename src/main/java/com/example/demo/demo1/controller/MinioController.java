@@ -1,55 +1,101 @@
 package com.example.demo.demo1.controller;
 
+import com.example.demo.common.response.ApiResponse;
+import com.example.demo.common.utils.FileDownloadUtil;
 import com.example.demo.demo1.service.MinioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.InputStream;
+import java.util.List;
 
+/**
+ * MinIO文件管理控制器
+ */
 @RestController
-@RequestMapping("/minio")
+@RequestMapping("/api/minio")
+@RequiredArgsConstructor
+@Slf4j
+@Validated
+@Api(tags = "MinIO文件管理")
 public class MinioController {
 
-    @Autowired
-    private MinioService minioService;
+    private final MinioService minioService;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file) {
-        return minioService.uploadFile(file);
+    @ApiOperation("上传文件")
+    public ApiResponse<String> uploadFile(
+            @ApiParam(value = "上传的文件", required = true)
+            @RequestParam("file") @NotNull(message = "文件不能为空") MultipartFile file) {
+        
+        if (file.isEmpty()) {
+            return ApiResponse.error("文件内容不能为空");
+        }
+        
+        String result = minioService.uploadFile(file);
+        log.info("File uploaded successfully: {}", file.getOriginalFilename());
+        return ApiResponse.success("文件上传成功", result);
+    }
+
+    @PostMapping("/upload/batch")
+    @ApiOperation("批量上传文件")
+    public ApiResponse<List<String>> uploadFiles(
+            @ApiParam(value = "上传的文件列表", required = true)
+            @RequestParam("files") @NotNull(message = "文件列表不能为空") MultipartFile[] files) {
+        
+        if (files.length == 0) {
+            return ApiResponse.error("文件列表不能为空");
+        }
+        
+        List<String> results = minioService.uploadFiles(files);
+        log.info("Batch upload completed, {} files uploaded", files.length);
+        return ApiResponse.success("批量上传成功", results);
     }
 
     @GetMapping("/download/{fileName}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable String fileName) {
-        try {
-            InputStream inputStream = minioService.downloadFile(fileName);
-            if (inputStream == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            byte[] bytes = readAllBytes(inputStream);
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .body(bytes);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(null);
-        }
+    @ApiOperation("下载文件")
+    public ResponseEntity<byte[]> downloadFile(
+            @ApiParam(value = "文件名", required = true)
+            @PathVariable @NotBlank(message = "文件名不能为空") String fileName) {
+        
+        InputStream inputStream = minioService.downloadFile(fileName);
+        return FileDownloadUtil.createDownloadResponse(inputStream, fileName);
     }
 
-    public byte[] readAllBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        byte[] data = new byte[1024];  // 每次读取1KB
-        int bytesRead;
-        while ((bytesRead = inputStream.read(data, 0, data.length)) != -1) {
-            buffer.write(data, 0, bytesRead);
-        }
-        return buffer.toByteArray();
+    @DeleteMapping("/{fileName}")
+    @ApiOperation("删除文件")
+    public ApiResponse<Void> deleteFile(
+            @ApiParam(value = "文件名", required = true)
+            @PathVariable @NotBlank(message = "文件名不能为空") String fileName) {
+        
+        minioService.deleteFile(fileName);
+        log.info("File deleted successfully: {}", fileName);
+        return ApiResponse.success("文件删除成功", null);
+    }
+
+    @GetMapping("/list")
+    @ApiOperation("获取文件列表")
+    public ApiResponse<List<String>> listFiles() {
+        List<String> files = minioService.listFiles();
+        return ApiResponse.success("获取文件列表成功", files);
+    }
+
+    @GetMapping("/exists/{fileName}")
+    @ApiOperation("检查文件是否存在")
+    public ApiResponse<Boolean> fileExists(
+            @ApiParam(value = "文件名", required = true)
+            @PathVariable @NotBlank(message = "文件名不能为空") String fileName) {
+        
+        boolean exists = minioService.fileExists(fileName);
+        return ApiResponse.success("检查完成", exists);
     }
 }
