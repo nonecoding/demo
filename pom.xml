@@ -109,7 +109,7 @@
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-boot-starter</artifactId>
-      <version>3.4.3</version>
+      <version>3.5.10.1</version>
     </dependency>
 
     <!-- 达梦数据库JDBC驱动 -->
