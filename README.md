@@ -1,11 +1,264 @@
-1\. Scene Description
-=====================
+# Demo Spring Boot Application
 
-Now you have learned the most mainstream system architecture technology "Microservice Technology Stack", and you have also received a satisfactory offer, and joined a logistics company called Shenling Logistics Company.
+## 项目简介
 
-Now your mood is still complicated, both happy and worried, happy is this offer you are very satisfied, worried is, listen to friends say logistics industry project business is very complex, technology involved is also more, and I have never been exposed to logistics projects, worried about whether they can hold? What if…
+这是一个基于Spring Boot 2.6.13的演示项目，集成了多种技术栈，包括：
 
-Don't worry too much, this course is to bring you a little bit of understanding of the project, stand on the perspective of a newcomer to look at this project, where does the code come from? What is the development specification? What environments? What is the project business like?……
+- **Spring Boot 2.6.13** - 主框架
+- **MyBatis-Plus** - ORM框架
+- **DM数据库** - 达梦数据库
+- **Apache Kafka** - 消息队列
+- **MinIO** - 对象存储
+- **WebSocket** - 实时通信
+- **Knife4j** - API文档
+
+## 项目结构
+
+```
+src/
+├── main/
+│   ├── java/
+│   │   └── com/example/demo/
+│   │       ├── common/                 # 公共模块
+│   │       │   ├── config/            # 配置类
+│   │       │   ├── controller/        # 公共控制器
+│   │       │   ├── exception/         # 异常处理
+│   │       │   ├── response/          # 统一响应格式
+│   │       │   └── utils/             # 工具类
+│   │       └── demo1/                 # 业务模块
+│   │           ├── controller/        # 控制器
+│   │           ├── entities/          # 实体类
+│   │           ├── mapper/            # 数据访问层
+│   │           └── service/           # 服务层
+│   └── resources/
+│       ├── application.yml            # 配置文件
+│       └── logback-spring.xml         # 日志配置
+```
+
+## 主要功能
+
+### 1. 用户管理 (UserController)
+- 创建用户
+- 查询用户
+- 更新用户
+- 删除用户
+- 用户列表
+
+### 2. 文件管理 (MinioController)
+- 文件上传
+- 文件下载
+- 文件删除
+- 文件列表
+- 批量上传
+
+### 3. 消息队列 (KafkaController)
+- 发送消息
+- 指定主题发送
+
+### 4. 健康检查 (HealthController)
+- 应用状态检查
+- Ping检查
+
+## 技术特性
+
+### 1. 统一响应格式
+所有API返回统一的响应格式：
+```json
+{
+  "code": 200,
+  "message": "操作成功",
+  "data": {},
+  "timestamp": "2023-12-01T10:00:00"
+}
+```
+
+### 2. 全局异常处理
+- 业务异常处理
+- 参数验证异常
+- 系统异常处理
+- 统一错误响应
+
+### 3. 参数验证
+- 使用JSR-303注解进行参数验证
+- 自定义验证消息
+- 统一验证异常处理
+
+### 4. 日志管理
+- 分环境日志配置
+- 异步日志输出
+- 错误日志单独记录
+- SQL日志记录
+
+### 5. 安全优化
+- 文件类型限制
+- 文件大小限制
+- 参数验证
+- 异常信息脱敏
+
+## 环境要求
+
+- JDK 8+
+- Maven 3.6+
+- DM数据库
+- Apache Kafka
+- MinIO
+
+## 配置说明
+
+### 数据库配置
+```yaml
+spring:
+  datasource:
+    url: jdbc:dm://localhost:5236/TESTDB
+    username: SYSDBA
+    password: SYSDBA
+    driver-class-name: dm.jdbc.driver.DmDriver
+```
+
+### Kafka配置
+```yaml
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      retries: 3
+    consumer:
+      group-id: my-consumer-group
+```
+
+### MinIO配置
+```yaml
+spring:
+  minio:
+    url: http://localhost:9000
+    access-key: minioadmin
+    secret-key: minioadmin
+    bucket: demo-bucket
+```
+
+## 启动方式
+
+1. 确保所有依赖服务已启动（数据库、Kafka、MinIO）
+2. 运行主类：`Demo1Application`
+3. 访问API文档：http://localhost:8089/doc.html
+
+## API文档
+
+项目集成了Knife4j，启动后可访问：
+- Swagger UI: http://localhost:8089/doc.html
+- API JSON: http://localhost:8089/v2/api-docs
+
+## 主要优化点
+
+### 1. 代码质量
+- 使用Lombok减少样板代码
+- 统一依赖注入方式（构造器注入）
+- 添加详细的JavaDoc注释
+- 规范的包结构和命名
+
+### 2. 异常处理
+- 全局异常处理器
+- 自定义业务异常
+- 统一错误响应格式
+- 异常日志记录
+
+### 3. 性能优化
+- 数据库连接池配置
+- 异步日志输出
+- 文件流式处理
+- 缓存配置
+
+### 4. 安全性
+- 参数验证
+- 文件上传限制
+- 敏感信息配置化
+- 错误信息脱敏
+
+### 5. 可维护性
+- 分层架构
+- 配置外部化
+- 日志分级管理
+- 健康检查接口
+
+## 开发规范
+
+### 1. 代码规范
+- 使用统一的代码格式
+- 添加必要的注释
+- 遵循RESTful API设计
+- 使用有意义的变量名
+
+### 2. 异常处理
+- 业务异常使用BusinessException
+- 记录详细的错误日志
+- 返回用户友好的错误信息
+
+### 3. 日志规范
+- 使用SLF4J进行日志记录
+- 区分不同级别的日志
+- 记录关键操作和异常
+
+### 4. 测试规范
+- 编写单元测试
+- 集成测试覆盖
+- 性能测试验证
+
+## 部署说明
+
+### 1. 环境变量
+```bash
+export SERVER_PORT=8089
+export DB_URL=jdbc:dm://localhost:5236/TESTDB
+export KAFKA_BOOTSTRAP_SERVERS=localhost:9092
+export MINIO_URL=http://localhost:9000
+```
+
+### 2. Docker部署
+```dockerfile
+FROM openjdk:8-jre-alpine
+COPY target/demo-1.0.0.jar app.jar
+EXPOSE 8089
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+```
+
+### 3. 监控配置
+- 应用监控：Spring Boot Actuator
+- 日志监控：ELK Stack
+- 性能监控：Micrometer + Prometheus
+
+## 常见问题
+
+### 1. 数据库连接失败
+- 检查数据库服务是否启动
+- 验证连接参数是否正确
+- 确认网络连通性
+
+### 2. Kafka连接失败
+- 检查Kafka服务状态
+- 验证bootstrap-servers配置
+- 确认主题是否存在
+
+### 3. MinIO连接失败
+- 检查MinIO服务状态
+- 验证访问密钥配置
+- 确认桶是否存在
+
+## 版本历史
+
+- v1.0.0 - 初始版本，基础功能实现
+- v1.1.0 - 代码优化，添加全局异常处理
+- v1.2.0 - 性能优化，安全性增强
+
+## 贡献指南
+
+1. Fork项目
+2. 创建功能分支
+3. 提交代码
+4. 创建Pull Request
+
+## 许可证
+
+MIT License
 
 ![img](https://cdn.nlark.com/yuque/0/2022/png/27683667/1665994390645-292d9d08-3927-4a96-8d4a-0c8a653d0b45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_18%2Ctext_6buR6ams56iL5bqP5ZGYwrfnoJTnqbbpmaI%3D%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
 
