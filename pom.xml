@@ -93,7 +93,7 @@
     <dependency>
       <groupId>io.minio</groupId>
       <artifactId>minio</artifactId>
-      <version>8.4.3</version> <!-- 确保使用最新版本 -->
+      <version>8.5.17</version> <!-- 确保使用最新版本 -->
     </dependency>
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>
